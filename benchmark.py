@@ -22,7 +22,7 @@ def main(args):
 
     time = '/usr/bin/time --format "%e,%U,%S"' #time function used in each test
         
-    if args.modeler == 'hypershelf':
+    if args.modeler == 'vsm':
         if args.function == 'init':
             init_results = subprocess.check_output(['/usr/bin/time', '--format', '%e,%U,%S', 'vsm', 'init', args.corpus, 'hypershelf_benchmark.ini', '--name', +args.corpus, '--rebuild'], stderr=subprocess.STDOUT).split("\n")[-2]
             prep_results = subprocess.check_output(['/usr/bin/time', '--format', '%e,%U,%S', 'vsm', 'prep', 'hypershelf_benchmark.ini', '--lang', 'en', '--high', 1000000, '--low', 5], stderr=subprocess.STDOUT).split("\n")[-2]
@@ -75,7 +75,7 @@ def populate_parser(parser):
     parser.add_argument("--topics", required=True, type=int, help="Number of topics")
     parser.add_argument("--iterations", default=500, type=int, help="Number of iterations")
     parser.add_argument("--log", default="log.csv", help="Path to log file")
-    parser.add_argument("--m", dest="modeler", required=True, choices=['hypershelf', 'mallet'], help="Topic-Modeler to run (hypershelf or mallet)")
+    parser.add_argument("--m", dest="modeler", required=True, choices=['vsm', 'mallet'], help="Topic-Modeler to run (hypershelf or mallet)")
     parser.add_argument("--f", dest="function", choices=['init', 'train'], help="Function to run (init or train)")
 
 if __name__ == '__main__':
