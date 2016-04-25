@@ -75,8 +75,8 @@ def populate_parser(parser):
     parser.add_argument("--topics", required=True, type=int, help="Number of topics")
     parser.add_argument("--iterations", default=500, type=int, help="Number of iterations")
     parser.add_argument("--log", default="log.csv", help="Path to log file")
-    parser.add_argument("--m", dest="modeler", required=True, help="Topic-Modeler to run (hypershelf or mallet)")
-    parser.add_argument("--f", dest="function", help="Function to run (init or train)")
+    parser.add_argument("--m", dest="modeler", required=True, choices=['hypershelf', 'mallet'], help="Topic-Modeler to run (hypershelf or mallet)")
+    parser.add_argument("--f", dest="function", choices=['init', 'train'], help="Function to run (init or train)")
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
