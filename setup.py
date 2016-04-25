@@ -34,5 +34,8 @@ setup(
         "Topic :: Text Processing :: Linguistic",
         ],
     install_requires=install_requires,
-    packages=packages
+    packages=packages,
+    entry_points={
+        'console_scripts' : ['ldamark' = 'ldamark.benchmark:main']
+    }
 )
