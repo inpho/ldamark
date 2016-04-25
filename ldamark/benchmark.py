@@ -8,7 +8,7 @@ import os.path
 
 import subprocess
 
-def main(args):
+def main():
     #Run appropriate topic-modeler function and append time results to log file
 
     from argparse import ArgumentParser
