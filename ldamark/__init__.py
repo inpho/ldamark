@@ -1,1 +1,1 @@
-# init.py for ldamark software
+# __init__.py for ldamark software
