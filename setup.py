@@ -36,6 +36,6 @@ setup(
     install_requires=install_requires,
     packages=packages,
     entry_points={
-        'console_scripts' : ['ldamark' = 'ldamark.benchmark:main']
+        'console_scripts' : ['ldamark = ldamark.benchmark:main']
     }
 )
