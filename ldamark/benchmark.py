@@ -57,9 +57,9 @@ def main():
                     '--lang',
                     'en',
                     '--high',
-                    1000000,
+                    '1000000',
                     '--low',
-                    5
+                    '5'
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
 
