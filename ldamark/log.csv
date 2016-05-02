@@ -1,0 +1,49 @@
+implementation,method,corpus,topics,iterations,real,user,system
+vsm,import,BJPS,,,17.6,17.84,3.76
+mallet,import,BJPS,,,0.7,1.02,0.1
+vsm,train,BJPS,5,200,11.3,6.15,2.08
+mallet,train,BJPS,5,200,7,8.46,0.15
+vsm,train,BJPS,25,200,14.4,9.45,1.97
+mallet,train,BJPS,25,200,8.4,9.64,0.2
+vsm,train,BJPS,50,200,18.1,12.94,2.19
+mallet,train,BJPS,50,200,9.2,10.98,0.17
+vsm,train,BJPS,100,200,25.9,20.72,2.16
+mallet,train,BJPS,100,200,9.6,11.26,0.19
+vsm,train,BJPS,500,200,91.9,83.94,4.92
+mallet,train,BJPS,500,200,11.7,14.23,0.26
+vsm,import,SEP Archives,,,1861.1,1817.55,9.74
+vsm,train,SEP Archives,5,200,607.1,580.14,23.96
+mallet,import,SEP Archives,,,23.8,16.91,0.78
+mallet,train,SEP Archives,5,200,1025.7,1034.29,1.12
+vsm,train,SEP Archives,25,200,1459.2,1432.4,23.86
+mallet,train,SEP Archives,25,200,1329.8,1339.81,1.26
+vsm,train,SEP Archives,50,200,2331.4,2304.16,24.3
+mallet,train,SEP Archives,50,200,1568.4,1579.79,1.44
+vsm,train,SEP Archives,100,200,450,4008.38,38.94
+mallet,train,SEP Archives,100,200,1777.5,1790.79,1.5
+vsm,train,SEP Archives,500,200,1541,19440.81,98.73
+mallet,train,SEP Archives,500,200,3179.8,3223.93,2.26
+vsm,import,Washburn,,,19.9,20.34,3.6
+vsm,train,Washburn,5,200,11.2,6.21,2
+mallet,import,Washburn,,,2.3,1.19,0.12
+mallet,train,Washburn,5,200,11.1,12.18,0.16
+vsm,train,Washburn,25,200,18.1,12.98,2.14
+mallet,train,Washburn,25,200,11.6,12.98,0.15
+vsm,train,Washburn,50,200,26.6,20.96,2.58
+mallet,train,Washburn,50,200,12.5,14.42,0.2
+vsm,train,Washburn,100,200,60.3,54.15,3.2
+mallet,train,Washburn,100,200,13.6,16.28,0.14
+vsm,train,Washburn,500,200,178.6,168.63,6.41
+mallet,train,Washburn,500,200,17.7,22.02,0.32
+vsm,import,SEP Current,,,710.8,698.69,5.91
+vsm,train,SEP Current,5,200,611.4,296.19,12.14
+mallet,import,SEP Current,,,13.4,7.56,0.52
+mallet,train,SEP Current,5,200,380.7,384.63,0.7
+vsm,train,SEP Current,25,200,653.7,639.92,10.73
+mallet,train,SEP Current,25,200,454.6,459.5,0.53
+vsm,train,SEP Current,50,200,1108.6,1089.52,16.04
+mallet,train,SEP Current,50,200,490.7,496.63,0.68
+vsm,train,SEP Current,100,200,1613.3,1548.69,61.52
+mallet,train,SEP Current,100,200,550,555.69,0.87
+vsm,train,SEP Current,500,200,372,7516.6,53.32
+mallet,train,SEP Current,500,200,692.9,692.26,15.11
