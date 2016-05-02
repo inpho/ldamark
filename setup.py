@@ -8,7 +8,7 @@ import tarfile
 packages = ['ldamark.'+pkg for pkg in find_packages('ldamark')]
 packages.append('ldamark')
 
-# TODO need to add mallet download
+# Mallet is downloaded and intalled in users current directory
 mallet_zip = wget.download('http://mallet.cs.umass.edu/dist/mallet-2.0.8RC3.tar.gz')
 mallet_dir = tarfile.open(mallet_zip, "r:gz")
 mallet_dir.extractall()

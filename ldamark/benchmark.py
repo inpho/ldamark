@@ -26,6 +26,7 @@ def main():
         log_file = os.path.join(os.getcwd(), log_file)
 #        print log_file
 
+    #time is not used
     time = '/usr/bin/time --format "%e,%U,%S"' #time function used in each test
         
     if args.modeler == 'vsm':
@@ -109,7 +110,7 @@ def main():
                     '/usr/bin/time',
                     '--format',
                     '%e,%U,%S',
-                    '/home/lsaggu/mallet-2.0.8RC3/bin/mallet',
+                    './mallet-2.0.8RC3/bin/mallet',
                     'import-dir',
                     '--input',
                     args.corpus,
@@ -128,7 +129,7 @@ def main():
                     '/usr/bin/time',
                     '--format',
                     '%e,%U,%S',
-                    '~/mallet-2.0.8RC3/bin/mallet',
+                    './mallet-2.0.8RC3/bin/mallet',
                     'train-topics',
                     '--input',
                     'out.mallet',
