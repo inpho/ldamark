@@ -8,11 +8,19 @@ import os.path
 
 import subprocess
 
+def msg():
+    """Custom help text for argparse renaming benchmark.py to ldamark"""
+
+    return """ldamark [-h] --topics TOPICS [--iterations ITERATIONS] [--log LOG]
+                    --m {vsm,mallet} --f {init,train} corpus
+           """
+
 def main():
     #Run appropriate topic-modeler function and append time results to log file
 
     from argparse import ArgumentParser
-    parser = ArgumentParser()
+    
+    parser = ArgumentParser(description="LDAmark benchmarkiing tool", usage=msg())
     populate_parser(parser)
     args = parser.parse_args()
 
