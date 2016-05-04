@@ -183,6 +183,7 @@ def populate_parser(parser):
                         choices=['vsm', 'mallet'],
                         help="Topic-Modeler to run (hypershelf or mallet)")
     parser.add_argument("--f",
+                        required=True,
                         dest="function",
                         choices=['init', 'train'],
                         help="Function to run (init or train)")
