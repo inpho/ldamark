@@ -19,12 +19,12 @@ def main():
     #Run appropriate topic-modeler function and append time results to log file
 
     from argparse import ArgumentParser
-    
+
     parser = ArgumentParser(description="LDAmark benchmarkiing tool", usage=msg())
     populate_parser(parser)
     args = parser.parse_args()
 
-    
+
     args.corpus = unicode(args.corpus, 'utf-8')
     args.modeler = args.modeler.lower()
     args.function = args.function.lower()
@@ -36,7 +36,7 @@ def main():
 
     #time is not used
     time = '/usr/bin/time --format "%e,%U,%S"' #time function used in each test
-        
+
     if args.modeler == 'vsm':
         if args.function == 'init':
             init_results = subprocess.check_output(
@@ -53,7 +53,7 @@ def main():
                     '--rebuild'
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
-            
+
             prep_results = subprocess.check_output(
                 [
                     '/usr/bin/time',
@@ -130,7 +130,7 @@ def main():
                 stderr=subprocess.STDOUT).split("\n")[-2]
 
             results = args.corpus+','+'init+prep'+','+init_results.strip()
-            
+
         elif args.function == 'train':
             train_results = subprocess.check_output(
                 [
@@ -198,4 +198,4 @@ def populate_parser(parser):
 
 if __name__ == '__main__':
     main()
-    
+
