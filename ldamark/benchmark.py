@@ -46,14 +46,14 @@ def main():
                     '%e,%U,%S',
                     'vsm',
                     'init',
-                    args.corpus,
+                    str(args.corpus),
                     'hypershelf_benchmark.ini',
                     '--name',
-                    args.corpus,
-                    '--rebuild'
+                    str(args.corpus),
+                    '--rebuild', '-q', '--no-nltk-stoplist'
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
-
+            '''
             prep_results = subprocess.check_output(
                 [
                     '/usr/bin/time',
@@ -67,17 +67,17 @@ def main():
                     '--high',
                     '1000000',
                     '--low',
-                    '5'
+                    '5', '-q'
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
-
+            '''
             temp_init = init_results.strip().split(',')
-            temp_prep = prep_results.strip().split(',')
+            #temp_prep = prep_results.strip().split(',')
             temp_init_prep = []
             for t in [0, 1, 2]:
-                temp_init_prep.append(float(temp_init[t]) + float(temp_prep[t]))
+                temp_init_prep.append(float(temp_init[t]))# + float(temp_prep[t]))
 
-            results = (args.corpus+
+            results = (args.modeler+','+args.corpus+
                         ','+
                         'init+prep'+
                         ','+
@@ -105,7 +105,7 @@ def main():
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
 
-            results = args.corpus+','+'train'+','+train_results.strip()
+            results = args.modeler+','+args.corpus+','+'train'+','+train_results.strip()
 
         else:
             #Improper function given
@@ -121,7 +121,7 @@ def main():
                     './mallet-2.0.8RC3/bin/mallet',
                     'import-dir',
                     '--input',
-                    args.corpus,
+                    str(args.corpus),
                     '--output',
                     'out.mallet',
                     '--keep-sequence',
@@ -129,7 +129,7 @@ def main():
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
 
-            results = args.corpus+','+'init+prep'+','+init_results.strip()
+            results = args.modeler+','+args.corpus+','+'init+prep'+','+init_results.strip()
 
         elif args.function == 'train':
             train_results = subprocess.check_output(
@@ -142,7 +142,7 @@ def main():
                     '--input',
                     'out.mallet',
                     '--num-topics',
-                    args.topics,
+                    str(args.topics),
                     '--output-state',
                     'mallet_out.gz',
                     '--output-topic-keys',
@@ -150,11 +150,11 @@ def main():
                     '--output-doc-topics',
                     'mallet_out.txt',
                     '--num-iterations',
-                    args.iterations
+                    str(args.iterations)
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
 
-            results = args.corpus+','+'train'+','+ train_results.strip()
+            results = args.modeler+','+args.corpus+','+'train'+','+ train_results.strip()
 
         else:
             #Improper function given
