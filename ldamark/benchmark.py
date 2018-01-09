@@ -2,6 +2,10 @@
 #
 # Python program for running benchmarks
 
+from __future__ import print_function
+from builtins import zip
+from builtins import str
+from builtins import map
 import sys
 import os
 import os.path
@@ -27,7 +31,7 @@ def main():
     args = parser.parse_args()
 
 
-    args.corpus = unicode(args.corpus, 'utf-8')
+    args.corpus = str(args.corpus)
     args.modeler = args.modeler.lower()
     args.function = args.function.lower()
 
@@ -50,9 +54,9 @@ def main():
                     'hypershelf_benchmark.ini',
                     '--name',
                     str(args.corpus),
-                    '--rebuild', '-q', '--no-nltk-stoplist'
+                    '--rebuild', '-q', '--no-nltk-stoplist', '--freq', '0'
                 ],
-                stderr=subprocess.STDOUT).split("\n")[-2]
+                stderr=subprocess.STDOUT).decode('utf8').split("\n")[-2]
             prep_results = subprocess.check_output(
                 [
                     '/usr/bin/time',
@@ -65,15 +69,16 @@ def main():
                     'mallet-2.0.8RC3/stoplists/en.txt',
                     '-q'
                 ],
-                stderr=subprocess.STDOUT).split("\n")[-2]
+                stderr=subprocess.STDOUT).decode('utf8').split("\n")[-2]
             temp_init = init_results.strip().split(',')
             temp_prep = prep_results.strip().split(',')
             temp_init_prep = [float(x)+float(y) for x,y in zip(temp_init, temp_prep)]
+            temp_init_prep[-1] = max(temp_init[-1], temp_prep[-1])
 
             results = ','.join([args.modeler, args.corpus, 'init+prep'] +
-                                map(str, temp_init_prep))
+                                list(map(str, temp_init_prep)))
 
-        elif args.function == 'train': 
+        elif args.function == 'train':
             a = [
                     '/usr/bin/time',
                     '--format',
@@ -88,7 +93,7 @@ def main():
                     '-k',
                     str(args.topics)
                 ]
-            print ' '.join(a)
+            print(' '.join(a))
             train_results = subprocess.check_output(
                 [
                     '/usr/bin/time',
@@ -104,7 +109,7 @@ def main():
                     '-k',
                     str(args.topics)
                 ],
-                stderr=subprocess.STDOUT).split("\n")[-2]
+                stderr=subprocess.STDOUT).decode('utf8').split("\n")[-2]
 
             results = args.modeler+','+args.corpus+','+'train'+','+train_results.strip()
 
@@ -125,10 +130,10 @@ def main():
                     str(args.corpus),
                     '--output',
                     'out.mallet',
-                    '--keep-sequence'#,
-                    #'--remove-stopwords'
+                    '--keep-sequence',
+                    '--remove-stopwords'
                 ],
-                stderr=subprocess.STDOUT).split("\n")[-2]
+                stderr=subprocess.STDOUT).decode('utf8').split("\n")[-2]
 
             results = args.modeler+','+args.corpus+','+'init+prep'+','+init_results.strip()
 
@@ -153,7 +158,7 @@ def main():
                     '--num-iterations',
                     str(args.iterations)
                 ],
-                stderr=subprocess.STDOUT).split("\n")[-2]
+                stderr=subprocess.STDOUT).decode('utf8').split("\n")[-2]
 
             results = args.modeler+','+args.corpus+','+'train'+','+ train_results.strip()
 
