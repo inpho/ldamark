@@ -8,6 +8,8 @@ import os.path
 
 import subprocess
 
+TIME_FORMAT = "%e,%U,%S,%M"
+
 def msg():
     """Custom help text for argparse renaming benchmark.py to ldamark"""
 
@@ -34,8 +36,6 @@ def main():
         log_file = os.path.join(os.getcwd(), log_file)
 #        print log_file
 
-    #time is not used
-    time = '/usr/bin/time --format "%e,%U,%S"' #time function used in each test
 
     if args.modeler == 'vsm':
         if args.function == 'init':
@@ -43,7 +43,7 @@ def main():
                 [
                     '/usr/bin/time',
                     '--format',
-                    '%e,%U,%S',
+                    TIME_FORMAT,
                     'vsm',
                     'init',
                     str(args.corpus),
@@ -53,55 +53,56 @@ def main():
                     '--rebuild', '-q', '--no-nltk-stoplist'
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
-            '''
             prep_results = subprocess.check_output(
                 [
                     '/usr/bin/time',
                     '--format',
-                    '%e,%U,%S',
+                    TIME_FORMAT,
                     'vsm',
                     'prep',
                     'hypershelf_benchmark.ini',
-                    '--lang',
-                    'en',
-                    '--high',
-                    '1000000',
-                    '--low',
-                    '5', '-q'
+                    '--stopword-file',
+                    'mallet-2.0.8RC3/stoplists/en.txt',
+                    '-q'
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
-            '''
             temp_init = init_results.strip().split(',')
-            #temp_prep = prep_results.strip().split(',')
-            temp_init_prep = []
-            for t in [0, 1, 2]:
-                temp_init_prep.append(float(temp_init[t]))# + float(temp_prep[t]))
+            temp_prep = prep_results.strip().split(',')
+            temp_init_prep = [float(x)+float(y) for x,y in zip(temp_init, temp_prep)]
 
-            results = (args.modeler+','+args.corpus+
-                        ','+
-                        'init+prep'+
-                        ','+
-                        str(temp_init_prep[0])+
-                        ','+
-                        str(temp_init_prep[1])+
-                        ','+
-                        str(temp_init_prep[2]))
+            results = ','.join([args.modeler, args.corpus, 'init+prep'] +
+                                map(str, temp_init_prep))
 
-        elif args.function == 'train':
-            train_results = subprocess.check_output(
-                [
-                    '/usr/bin/time/',
+        elif args.function == 'train': 
+            a = [
+                    '/usr/bin/time',
                     '--format',
-                    '%e,%U,%S',
+                    TIME_FORMAT,
                     'vsm',
                     'train',
                     'hypershelf_benchmark.ini',
                     '--iter',
-                    args.iterations,
+                    str(args.iterations),
                     '--context-type',
                     'document',
                     '-k',
-                    args.topics
+                    str(args.topics)
+                ]
+            print ' '.join(a)
+            train_results = subprocess.check_output(
+                [
+                    '/usr/bin/time',
+                    '--format',
+                    TIME_FORMAT,
+                    'vsm',
+                    'train',
+                    'hypershelf_benchmark.ini',
+                    '--iter',
+                    str(args.iterations),
+                    '--context-type',
+                    'document',
+                    '-k',
+                    str(args.topics)
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
 
@@ -117,15 +118,15 @@ def main():
                 [
                     '/usr/bin/time',
                     '--format',
-                    '%e,%U,%S',
+                    TIME_FORMAT,
                     './mallet-2.0.8RC3/bin/mallet',
                     'import-dir',
                     '--input',
                     str(args.corpus),
                     '--output',
                     'out.mallet',
-                    '--keep-sequence',
-                    '--remove-stopwords'
+                    '--keep-sequence'#,
+                    #'--remove-stopwords'
                 ],
                 stderr=subprocess.STDOUT).split("\n")[-2]
 
@@ -136,7 +137,7 @@ def main():
                 [
                     '/usr/bin/time',
                     '--format',
-                    '%e,%U,%S',
+                    TIME_FORMAT,
                     './mallet-2.0.8RC3/bin/mallet',
                     'train-topics',
                     '--input',
